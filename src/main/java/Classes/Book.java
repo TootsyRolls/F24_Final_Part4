@@ -7,7 +7,7 @@ public class Book {
     private String publisher;
     private String isbn;
 
-    // Default
+    // Default Constructor
     public Book() {
         this.title = "";
         this.author = "";
@@ -16,9 +16,9 @@ public class Book {
         this.isbn = "";
     }
 
-    // Title Constructor
+    // Title Only Constructor
     public Book(String title) {
-        this.title = title;
+        this.title = toTitleCase(title);
         this.author = "";
         this.price = 0.0;
         this.publisher = "";
@@ -27,7 +27,7 @@ public class Book {
 
     // Full Data Constructor
     public Book(String title, String author, double price, String publisher, String isbn) {
-        this.title = title;
+        this.title = toTitleCase(title);
         this.author = author;
         this.price = price;
         this.publisher = publisher;
@@ -45,7 +45,7 @@ public class Book {
 
     // ISBN Checker
     public int checkIsbnStatus() {
-        String pureIsbn = isbn.replaceAll("-","");
+        String pureIsbn = isbn.replaceAll("-",""); // Removes spaces to check length better
 
         if (pureIsbn.length() == 10) {
             return 0;
@@ -61,15 +61,18 @@ public class Book {
     // Title Case Converter
     public String toTitleCase(String input) {
         StringBuilder titleCase = new StringBuilder(input.length());
-        boolean nextTitleCase = true;
+        boolean nextTitleCase = true; // Has to be true for first letter to be capitalized
 
         for (char c : input.toCharArray()) {
-            if (Character.isUpperCase(c)) {
-                nextTitleCase = true;
+            if (Character.isWhitespace(c)) { // Looks for spaces between words
+                nextTitleCase = true; // Resets the boolean after space, capitalizes the first letter
             }
             else if (nextTitleCase) {
                 c = Character.toTitleCase(c);
-                nextTitleCase = false;
+                nextTitleCase = false; // Stops capitalization after first
+            }
+            else {
+                c = Character.toLowerCase(c); // Lowercases the rest of the word for format
             }
             titleCase.append(c);
         }
@@ -83,7 +86,17 @@ public class Book {
     }
 
     // Equals Method
-    public boolean equals() {
+
+    public boolean equals(Object other) {
+        boolean result;
+        if ((other == null) || (this.getClass() != other.getClass())) { // Check first if object is equal to null or the same type of class first
+            result = false; // If object is null or not the same class then false
+        }
+        else {
+            Book otherBook = (Book) other;
+            result = this.isbn.equals(otherBook.isbn); //
+        }
+        return result;
     }
 
     // Clone Method
