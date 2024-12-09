@@ -29,21 +29,43 @@ public class Library {
 
     // Search Method
     public ArrayList<Book> searchBook(String input) {
-        ArrayList<Book> books = new ArrayList<>();
-        for (Book book : books) { // Goes through book objects in a book library
+        ArrayList<Book> result = new ArrayList<>();
+        for (Book book : books) { // Goes through book objects in book library
             if (book.getTitle().toLowerCase().contains(input.toLowerCase())) { // Looks for title match, lowercased to remove capitalization errors in search
-                books.add(book);
+                result.add(book);
             }
         }
-        return books;
+        return result;
     }
 
     // Equals Method
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true; // Is true if the object and other are the same
+        }
+        if (other == null || getClass() != other.getClass()) {
+            return false; // If other is not in the same library or is not equal to the object then is false
+        }
+        Library library = (Library) other; // Places other into a library to be accessed by books
+        return books.equals(library.books); // Accesses books of library to see if equal or not
+    }
 
     // toString Method
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (Book book : books) { // Looks over at each book object and formats them
+            result.append(book.getTitle()).append("by: ").append(book.getAuthor()).append("\n"); // Format : Title by Author\n
+        }
+        return result.toString();
+    }
 
     // Getters & Setters
-
-
-
+    public ArrayList<Book> getBooks() {
+        return books;
+    }
+    public void setBooks(ArrayList<Book> books) {
+        this.books = books;
+    }
 }
+
+// Hello professor, it was a pleasure taking your class :)

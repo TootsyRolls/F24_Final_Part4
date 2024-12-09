@@ -93,8 +93,8 @@ public class Book {
             result = false; // If object is null or not the same class then false
         }
         else {
-            Book otherBook = (Book) other;
-            result = this.isbn.equals(otherBook.isbn); //
+            Book otherBook = (Book) other; //  Places other into a book to access the isbn for comparing them below
+            result = this.isbn.equals(otherBook.isbn); // Checks if isbn matches
         }
         return result;
     }
